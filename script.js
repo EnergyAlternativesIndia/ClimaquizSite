@@ -44,9 +44,9 @@ document.getElementById('urlForm').addEventListener('submit', function(event) {
 //       });
 //   }
   
-async function sendUrlsToApi(urls) {
+function sendUrlsToApi(urls) {
   try {
-    const response = await fetch('https://kikipe5563.pythonanywhere.com/article-parser', {
+    const response =fetch('https://kikipe5563.pythonanywhere.com/article-parser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,11 +58,11 @@ async function sendUrlsToApi(urls) {
       throw new Error('Failed to fetch data from the Flask API');
     }
 
-    const data = await response.json();
+    const data = response.json();
     const articles = data.articles;
 
     // Send the list of articles to the second API endpoint
-    const secondApiResponse = await fetch('https://suryars123.pythonanywhere.com/quiz-generator', {
+    const secondApiResponse = fetch('https://suryars123.pythonanywhere.com/quiz-generator', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ async function sendUrlsToApi(urls) {
       throw new Error('Failed to fetch data from the second API');
     }
 
-    const secondApiData = await secondApiResponse.json();
+    const secondApiData = secondApiResponse.json();
     console.log('Final response from second API:', secondApiData);
     displayResponse(secondApiData); // Assuming you have a function to display the response
   } catch (error) {

@@ -107,7 +107,7 @@ async function sendUrlsToApi(urls) {
   }
   
   function sendMcqToApi(mcqContent) {
-    fetch('http://192.168.1.9:5000/submit', {
+    fetch('https://kikipe5563.pythonanywhere.com/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

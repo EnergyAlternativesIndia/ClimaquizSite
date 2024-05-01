@@ -26,24 +26,6 @@ document.getElementById('urlForm').addEventListener('submit', function(event) {
   sendUrlsToApi(urls);
 });
 
-// function sendUrlsToApi(urls) {
-//     fetch('http://192.168.1.9:5000/quiz-generator', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ urls: urls }),
-//     })
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log('Response from API:', data);
-//         displayResponse(data);
-//       })
-//       .catch(error => {
-//         console.error('Error sending URLs to API:', error);
-//       });
-//   }
-  
 async function sendUrlsToApi(urls) {
   try {
     const response = await fetch('https://kikipe5563.pythonanywhere.com/article-parser', {
@@ -59,6 +41,9 @@ async function sendUrlsToApi(urls) {
     }
 
     const data = await response.json();
+        if (data.errors && data.errors.length > 0) {
+      const errorLinks = data.error_links.join('\n');
+      displayErrorLinks(errorLinks);}
     const articles = data.articles;
 
     // Send the list of articles to the second API endpoint
@@ -82,6 +67,21 @@ async function sendUrlsToApi(urls) {
   }
 }
 
+
+function displayErrorLinks(errorLinks) {
+  const errorBox = document.createElement('div');
+  errorBox.className = 'error-box';
+  errorBox.textContent = errorLinks;
+
+  const closeButton = document.createElement('button');
+  closeButton.textContent = 'X';
+  closeButton.onclick = function () {
+    errorBox.parentNode.removeChild(errorBox);
+  };
+
+  errorBox.appendChild(closeButton);
+  document.getElementById('errorContainer').appendChild(errorBox);
+}
 
   function displayResponse(responseObject) {
     const responseContainer = document.getElementById('responseContainer');

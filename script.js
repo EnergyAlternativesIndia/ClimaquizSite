@@ -41,7 +41,7 @@ async function sendUrlsToApi(urls) {
     }
 
     const data = await response.json();
-        if (data.errors && data.errors.length > 0) {
+        if (typeof data.errors === 'number' && data.errors > 0) {
       const errorLinks = data.error_links.join('\n');
       displayErrorLinks(errorLinks);}
     const articles = data.articles;
